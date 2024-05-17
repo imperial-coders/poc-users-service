@@ -18,7 +18,13 @@
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
-    "protos.user": "protoc --plugin=protoc-gen-ts_proto=./node_modules/.bin/protoc-gen-ts_proto --ts_proto_out=nestJs=true,importSuffix=.js:. ./src/proto/user/user.proto"
+    "protos.user": "protoc --plugin=protoc-gen-ts_proto=./node_modules/.bin/protoc-gen-ts_proto --ts_proto_out=nestJs=true,importSuffix=.js:. ./src/proto/user/user.proto",
+    "codegen.prisma": "prisma generate",
+    "db.migrations.dev": "prisma migrate dev",
+    "db.migrations.deploy": "prisma migrate deploy",
+    "db.reset": "prisma migrate reset -f",
+    "db.studio": "prisma studio",
+    "db.seed": "prisma db seed"
   },
   "dependencies": {
     "@grpc/grpc-js": "^1.10.8",
@@ -27,6 +33,8 @@
     "@nestjs/core": "^10.3.8",
     "@nestjs/microservices": "^10.3.8",
     "@nestjs/platform-express": "^10.0.0",
+    "@prisma/client": "5.14.0",
+    "prisma": "^5.14.0",
     "reflect-metadata": "^0.2.2",
     "rxjs": "^7.8.1",
     "ts-proto": "^1.176.0"
@@ -70,5 +78,8 @@
     ],
     "coverageDirectory": "../coverage",
     "testEnvironment": "node"
+  },
+  "prisma": {
+    "seed": "ts-node prisma/seed.ts"
   }
 }

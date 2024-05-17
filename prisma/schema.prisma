@@ -1,0 +1,40 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+model User {
+  id              String  @id @default(cuid())
+  firstName       String  @map("first_name")
+  lastName        String  @map("last_name")
+  email           String  @unique
+  phoneNumber     String? @map("phone_number")
+  profileImageUri String? @map("profile_image_uri")
+
+  createdAt    DateTime      @default(now()) @map("created_at")
+  updatedAt    DateTime      @updatedAt @map("updated_at")
+  UserSettings UserSettings?
+
+  @@map("users")
+}
+
+model UserSettings {
+  id                               String @id @default(cuid())
+  userId                           String @map("user_id")
+  favoriteStarWarsCharacterSwapiId String @map("favorite_star_wars_character_swapi_id")
+
+  user User @relation(fields: [userId], references: [id])
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@unique([userId])
+  @@map("user_settings")
+}
