@@ -4,9 +4,11 @@ import {
   GetUserRequest,
   User,
   UserServiceController,
+  UserServiceControllerMethods,
 } from 'src/proto/user/user';
 
 @Controller()
+@UserServiceControllerMethods()
 export class UserController implements UserServiceController {
   private readonly logger = new Logger(UserController.name);
 
