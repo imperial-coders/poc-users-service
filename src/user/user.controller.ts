@@ -1,6 +1,10 @@
 import { Controller, Logger } from '@nestjs/common';
 import { GrpcMethod } from '@nestjs/microservices';
-import { GetUserRequest, User, UserServiceController } from 'src/proto/user';
+import {
+  GetUserRequest,
+  User,
+  UserServiceController,
+} from 'src/proto/user/user';
 
 @Controller()
 export class UserController implements UserServiceController {
@@ -9,6 +13,7 @@ export class UserController implements UserServiceController {
   @GrpcMethod('UserService', 'getUser')
   async getUser(request: GetUserRequest): Promise<User> {
     this.logger.log(request);
+    console.log('damn it');
 
     // TODO => users prisma service await a function there
     const mockUser: User = {

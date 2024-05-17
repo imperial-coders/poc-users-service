@@ -8,13 +8,12 @@ async function bootstrap() {
   app.connectMicroservice<MicroserviceOptions>({
     transport: Transport.GRPC,
     options: {
-      url: 'localhost:5000',
-      protoPath: join(__dirname, '../src/proto/user.proto'),
+      protoPath: join(__dirname, '../src/proto/user/user.proto'),
       package: 'user',
     },
   });
 
   await app.startAllMicroservices();
-  await app.listen(3000);
+  await app.listen(3001);
 }
 bootstrap();
