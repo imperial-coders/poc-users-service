@@ -1,55 +1,58 @@
-import { PrismaClient } from '@prisma/client';
+import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
 async function main() {
   const paul = await prisma.user.upsert({
-    where: { email: 'paulatreides@caladan.com' },
+    where: { id: "clwb7mw8300003z6kadi875xg" },
     update: {},
     create: {
-      email: 'paulatreides@caladan.com',
-      firstName: 'Paul',
-      lastName: 'Atreides',
+      id: "clwb7mw8300003z6kadi875xg",
+      email: "paulatreides@caladan.com",
+      firstName: "Paul",
+      lastName: "Atreides",
       UserSettings: {
         create: {
-          favoriteStarWarsCharacterSwapiId: '11',
+          favoriteStarWarsCharacterSwapiId: "11",
         },
       },
     },
   });
 
   const leto = await prisma.user.upsert({
-    where: { email: 'letoatreides@caladan.com' },
+    where: { id: "clwb7nckm00033z6kbm4nd22r" },
     update: {},
     create: {
-      email: 'letoatreides@caladan.com',
-      firstName: 'Leto',
-      lastName: 'Atreides',
+      id: "clwb7nckm00033z6kbm4nd22r",
+      email: "letoatreides@caladan.com",
+      firstName: "Leto",
+      lastName: "Atreides",
       UserSettings: {
         create: {
-          favoriteStarWarsCharacterSwapiId: '32',
+          favoriteStarWarsCharacterSwapiId: "32",
         },
       },
     },
   });
 
   const jessica = await prisma.user.upsert({
-    where: { email: 'jessicaatreides@caladan.com' },
+    where: { id: "clwb7nfxq00063z6k0acectsj" },
     update: {},
     create: {
-      email: 'jessicaatreides@caladan.com',
-      firstName: 'Jessica',
-      lastName: 'Atreides',
+      id: "clwb7nfxq00063z6k0acectsj",
+      email: "jessicaatreides@caladan.com",
+      firstName: "Jessica",
+      lastName: "Atreides",
       UserSettings: {
         create: {
-          favoriteStarWarsCharacterSwapiId: '21',
+          favoriteStarWarsCharacterSwapiId: "21",
         },
       },
     },
   });
 
-  console.log('created paul', paul);
-  console.log('created leto', leto);
-  console.log('created jessica', jessica);
+  console.log("created paul", paul);
+  console.log("created leto", leto);
+  console.log("created jessica", jessica);
 }
 
 main()
