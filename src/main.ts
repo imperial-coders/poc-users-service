@@ -9,8 +9,16 @@ async function bootstrap() {
     transport: Transport.GRPC,
     options: {
       url: "localhost:5000",
-      protoPath: join(__dirname, "../src/proto/user/user.proto"),
+      protoPath: join(__dirname, "./proto/user/user.proto"),
       package: "user",
+    },
+  });
+  app.connectMicroservice<MicroserviceOptions>({
+    transport: Transport.GRPC,
+    options: {
+      url: "localhost:5001",
+      protoPath: join(__dirname, "./proto/user-settings/user-settings.proto"),
+      package: "userSettings",
     },
   });
 

@@ -1,0 +1,29 @@
+syntax = "proto3";
+
+package userSettings;
+
+service UserSettingsService {
+  rpc getUserSettings (GetUserSettingsRequest) returns (UserSettings) {}
+  rpc getUserSettingsBuUserId (GetUserSettingsByUserIdRequest) returns (UserSettings) {}
+  rpc updateUserSettings (UpdateUserSettingsRequest) returns (UserSettings) {};
+}
+
+message GetUserSettingsByUserIdRequest {
+  string user_id = 1;
+}
+
+message GetUserSettingsRequest {
+  string id = 1;
+}
+
+message UserSettings {
+  string id = 1;
+  string favorite_star_wars_character_swapi_id = 2;
+  string created_at = 6;
+  string updated_at = 7;
+}
+
+message UpdateUserSettingsRequest {
+  string id = 1;
+  string favoriteStarWarsCharacterSwapiId = 2;
+}

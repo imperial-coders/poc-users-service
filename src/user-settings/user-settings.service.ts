@@ -11,6 +11,18 @@ export class UserSettingsService {
     });
   }
 
+  async getUserSettingsByUserId({
+    userId,
+  }: {
+    userId: string;
+  }): Promise<UserSettings | null> {
+    return await this.prisma.userSettings.findUnique({
+      where: {
+        userId: userId,
+      },
+    });
+  }
+
   async updateUserSettings({
     id,
     favoriteStarWarsCharacterSwapiId,

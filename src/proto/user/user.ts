@@ -14,49 +14,92 @@ export interface GetUserRequest {
   id: string;
 }
 
+export interface GetUsersRequest {
+  ids: string[];
+}
+
+export interface SearchUsersRequest {
+  limit: number;
+  offset: number;
+  keywords: string;
+}
+
+export interface SearchUsersResponse {
+  total: number;
+  results: User[];
+}
+
+export interface CreateUserRequest {
+  id?: string | undefined;
+  firstName: string;
+  lastName: string;
+  email: string;
+  phoneNumber?: string | undefined;
+  profileImageUri?: string | undefined;
+  favoriteStarWarsCharacterSwapiId?: string | undefined;
+}
+
+export interface UpdateUserRequest {
+  id: string;
+  firstName?: string | undefined;
+  lastName?: string | undefined;
+  email?: string | undefined;
+  phoneNumber?: string | undefined;
+  profileImageUri?: string | undefined;
+  favoriteStarWarsCharacterSwapiId?: string | undefined;
+}
+
 export interface User {
   id: string;
   firstName: string;
   lastName: string;
   email: string;
-  phoneNumber: string;
+  phoneNumber?: string | undefined;
+  createdAt: string;
+  updatedAt: string;
 }
 
 export const USER_PACKAGE_NAME = "user";
 
 export interface UserServiceClient {
   getUser(request: GetUserRequest): Observable<User>;
+
+  getUsers(request: GetUsersRequest): Observable<SearchUsersResponse>;
+
+  searchUsers(request: SearchUsersRequest): Observable<SearchUsersResponse>;
+
+  createUser(request: CreateUserRequest): Observable<User>;
+
+  updateUser(request: UpdateUserRequest): Observable<User>;
 }
 
 export interface UserServiceController {
   getUser(request: GetUserRequest): Promise<User> | Observable<User> | User;
+
+  getUsers(
+    request: GetUsersRequest,
+  ): Promise<SearchUsersResponse> | Observable<SearchUsersResponse> | SearchUsersResponse;
+
+  searchUsers(
+    request: SearchUsersRequest,
+  ): Promise<SearchUsersResponse> | Observable<SearchUsersResponse> | SearchUsersResponse;
+
+  createUser(request: CreateUserRequest): Promise<User> | Observable<User> | User;
+
+  updateUser(request: UpdateUserRequest): Promise<User> | Observable<User> | User;
 }
 
 export function UserServiceControllerMethods() {
   return function (constructor: Function) {
-    const grpcMethods: string[] = ["getUser"];
+    const grpcMethods: string[] = ["getUser", "getUsers", "searchUsers", "createUser", "updateUser"];
     for (const method of grpcMethods) {
-      const descriptor: any = Reflect.getOwnPropertyDescriptor(
-        constructor.prototype,
-        method,
-      );
-      GrpcMethod("UserService", method)(
-        constructor.prototype[method],
-        method,
-        descriptor,
-      );
+      const descriptor: any = Reflect.getOwnPropertyDescriptor(constructor.prototype, method);
+      GrpcMethod("UserService", method)(constructor.prototype[method], method, descriptor);
     }
     const grpcStreamMethods: string[] = [];
     for (const method of grpcStreamMethods) {
-      const descriptor: any = Reflect.getOwnPropertyDescriptor(
-        constructor.prototype,
-        method,
-      );
-      GrpcStreamMethod("UserService", method)(
-        constructor.prototype[method],
-        method,
-        descriptor,
-      );
+      const descriptor: any = Reflect.getOwnPropertyDescriptor(constructor.prototype, method);
+      GrpcStreamMethod("UserService", method)(constructor.prototype[method], method, descriptor);
     }
   };
 }
